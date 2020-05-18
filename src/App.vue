@@ -4,10 +4,10 @@
             <div class="collapse navbar-collapse">
                 <div class="navbar-nav">
                     <router-link to="/" class="nav-item nav-link">Home</router-link>
-                    <router-link v-if="!loggedIn" to="/register" class="nav-item nav-link">Register</router-link>
-                    <router-link v-if="!loggedIn" to="/login" class="nav-item nav-link">Login</router-link>
-                    <span v-if="loggedIn">Welcome, {{name}}</span>
-                    <button v-if="loggedIn" @click.prevent="logout" class="btn btn-secondary lefty">log out</button>
+                    <router-link v-if="!isLoggedIn" to="/register" class="nav-item nav-link">Register</router-link>
+                    <router-link v-if="!isLoggedIn" to="/login" class="nav-item nav-link">Login</router-link>
+                    <span v-if="isLoggedIn">Welcome, {{user}}</span>
+                    <button v-if="isLoggedIn" @click.prevent="logout" class="btn btn-secondary lefty">log out</button>
                 </div>
             </div>
         </nav>
@@ -17,31 +17,40 @@
 </template>
 
 <script>
-
+import {mapState} from 'vuex'
 export default {
   name: 'App',
   data(){
     return{
-      loggedIn:null,
-      name:''
+      //loggedIn:null,
+      //name:''
     }
   },
   methods:{
     logout(){
-      /*this.axios.get('http://127.0.0.1:8000/api/logout').
-          then(res=>{
-            console.log(res)
-          })*/
-      localStorage.removeItem('name')
-      localStorage.removeItem('token')
-      this.loggedIn=null
-      this.name=''
-      this.$router.push('/')
+        this.$store.dispatch('logout')
+        .then(() => {
+          this.$router.push({name:'home'})
+        })
+
     },
   },
+  //computed:mapState(['user']),
+  computed : {
+      isLoggedIn : function(){ 
+        return this.$store.getters.isLoggedIn
+      },
+      //userName: function(){ return this.$store.getters.userName}
+      userName: function(){ 
+        return this.$store.state.user
+      },
+      ...mapState(['user'])
+  },
+
   mounted () {
-    this.loggedIn=localStorage.getItem('token')
-    this.name=localStorage.getItem('name')
+    //this.loggedIn=localStorage.getItem('token')
+    //this.name=localStorage.getItem('name')
+    console.log('user name is '+this.name)
   }
 }
 </script>

@@ -28,6 +28,7 @@
 </template>
 
 <script>
+
 export default {
     data(){
         return{
@@ -39,22 +40,21 @@ export default {
     },
     methods:{
         login(){
-            //console.log("jkhkjhjk")
-            this.axios.post('http://127.0.0.1:8000/api/login',this.credentials).
-                then(res=>{
-                    //console.log(res)
-                   localStorage.setItem('name',res.data.user)
-                   localStorage.setItem('token',res.data.token)
-                   if(localStorage.getItem('token')){
-                       this.$router.push({name:'dashboard'})
-                   }
-                }).
-                catch(err=>{
-                    console.log(err);
+            console.log(this.credentials.email)
+            this.$store.dispatch('login', this.credentials)
+                .then(() => {
+                    //console.log('yahoo ni babalawoooooooooooooooooooooo')
+                    this.$router.push({name:'dashboard'})
+                    //console.log('nami be dis')
                 })
+                .catch(err => {
+                    //console.log('Mon amour')
+                    console.log(err)
+                })
+
         }
     },
-    beforeRouteEnter (to, from, next) { 
+     beforeRouteEnter (to, from, next) { 
         if (localStorage.getItem('token')) {
             return next('/dashboard');
         }
