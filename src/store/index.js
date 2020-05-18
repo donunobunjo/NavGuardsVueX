@@ -13,7 +13,7 @@ export default new Vuex.Store({
   state: {
     status: '',
     token: localStorage.getItem('token') || '',
-    user : 'hehe'
+    user : ''
   },
   getters : {
     isLoggedIn: state => !!state.token,
@@ -40,7 +40,6 @@ export default new Vuex.Store({
       state.status = ''
       state.token = ''
       state.user= ''
-      console.log('loggginnnng outtttttt')
     }
   },
   actions:{
@@ -48,6 +47,26 @@ export default new Vuex.Store({
       let uri =  'http://127.0.0.1:8000/api/get_all'
       return commit('setPosts', await Axios.get(uri))
     }*/
+    register({commit}, profile){
+      return new Promise((resolve, reject) => {
+        let uri = 'http://127.0.0.1:8000/api/register' 	
+        commit('auth_request')
+        Axios.post(uri, profile)
+        .then(resp => {
+          const token = resp.data.token
+          const user = resp.data.user
+          localStorage.setItem('token', token)
+          Axios.defaults.headers.common['Authorization'] = 'Bearer '+ token
+          commit('auth_success', user, token)
+          resolve(resp)
+        })
+        .catch(err => {
+          commit('auth_error', err)
+          localStorage.removeItem('token')
+          reject(err)
+        })
+      })
+    },
     login({commit}, credentials){
       return new Promise((resolve, reject) => {
         commit('auth_request')
@@ -69,12 +88,7 @@ export default new Vuex.Store({
       })
     },
     logout({commit}){
-      /*commit('logout')
-      localStorage.removeItem('token')
-      localStorage.removeItem('name')
-      delete Axios.defaults.headers.common['Authorization']*/
-
-      return new Promise((resolve, reject) => {
+        return new Promise((resolve, reject) => {
         commit('logout')
         localStorage.removeItem('token')
         delete Axios.defaults.headers.common['Authorization']

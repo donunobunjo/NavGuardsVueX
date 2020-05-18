@@ -40,15 +40,11 @@ export default {
     },
     methods:{
         login(){
-            console.log(this.credentials.email)
             this.$store.dispatch('login', this.credentials)
                 .then(() => {
-                    //console.log('yahoo ni babalawoooooooooooooooooooooo')
                     this.$router.push({name:'dashboard'})
-                    //console.log('nami be dis')
                 })
                 .catch(err => {
-                    //console.log('Mon amour')
                     console.log(err)
                 })
 

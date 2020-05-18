@@ -48,18 +48,10 @@
         },
         methods: {
             register() {
-                this.axios.post('http://127.0.0.1:8000/api/register', this.profile).
-                    then(res => {
-                        //console.log(res)
-                        localStorage.setItem('name', res.data.user);
-                        localStorage.setItem('token', res.data.token);
-                        if (localStorage.getItem('token') !== null) {
-                            this.$router.push({ name: 'dashboard' })
-                        }
-                    }).
-                    catch(function (err) {
-                        console.log(err)
-                    })
+                    this.$store.dispatch('register', this.profile)
+                    .then(() => this.$router.push({name:'dashboard'}))
+                    .catch(err => console.log(err))
+
             },
         },
         beforeRouteEnter (to, from, next) { 

@@ -50,7 +50,7 @@ export default {
   mounted () {
     //this.loggedIn=localStorage.getItem('token')
     //this.name=localStorage.getItem('name')
-    console.log('user name is '+this.name)
+    //console.log('user name is '+this.name)
   }
 }
 </script>
