@@ -13,7 +13,7 @@
     "bootstrap-vue": "^2.14.0",
     "core-js": "^3.6.4",
     "element-ui": "^2.13.1",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "nprogress": "^0.2.0",
     "popper.js": "^1.16.1",
     "vue": "^2.6.11",
