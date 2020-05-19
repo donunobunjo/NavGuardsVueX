@@ -7,6 +7,14 @@
                         Login
                     </div>
                     <div class="card card-body">
+                        <div v-if="spinner">
+                             <b-spinner type="grow" label="Busy"></b-spinner>
+                        </div>
+                        <!--<div>
+                            <b-toast id="example-toast" title="BootstrapVue" static no-auto-hide>
+                                 Hello, world! This is a toast message.
+                            </b-toast>
+                        </div>-->
                         <form>
                             <div class="row form-group">
                                 <label for="email">Email:</label>
@@ -35,19 +43,26 @@ export default {
             credentials:{
                 email:'',
                 password:''
-            }
+            },
+            spinner:false
         }
     },
     methods:{
         login(){
-            this.$store.dispatch('login', this.credentials)
+            if(this.credentials.email!=""&&this.credentials.password!=""){
+                 this.spinner=true
+                 this.$store.dispatch('login', this.credentials)
                 .then(() => {
+                    this.spinner=false
                     this.$router.push({name:'dashboard'})
                 })
                 .catch(err => {
                     console.log(err)
                 })
-
+            }
+            else{
+                //$bvToast.show('example-toast')
+            }
         }
     },
      beforeRouteEnter (to, from, next) { 

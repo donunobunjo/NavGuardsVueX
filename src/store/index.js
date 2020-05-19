@@ -13,12 +13,16 @@ export default new Vuex.Store({
   state: {
     status: '',
     token: localStorage.getItem('token') || '',
-    user : ''
+    user : '',
+    states:['a','b','c']
   },
   getters : {
     isLoggedIn: state => !!state.token,
     authStatus: state => state.status,
-    userName: state=>state.user
+    userName: state=>state.user,
+    states: state=>{
+      return state.states
+    }
   },
   mutations: {
     auth_request(state){
@@ -40,6 +44,9 @@ export default new Vuex.Store({
       state.status = ''
       state.token = ''
       state.user= ''
+    },
+    fetch_states(state,states){
+       state.states=states
     }
   },
   actions:{
@@ -96,6 +103,20 @@ export default new Vuex.Store({
         reject()
       })
       
+    },
+    fetchStates({commit}){
+        return new Promise((resolve,reject)=>{
+          let uri= 'http://127.0.0.1:8000/api/states'
+          Axios.get(uri)
+            .then((res)=>{
+              commit('fetch_states',res.data)
+              resolve(res)
+            })
+            .catch((err)=>{
+              reject(err)
+            })
+        })
+          
     }
   },
   strict: debug
