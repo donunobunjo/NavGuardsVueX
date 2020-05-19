@@ -11,7 +11,7 @@
                             <form>
                                 <div class="row form-group">
                                     <label for="state">State:</label>
-                                    <select name="" id="">
+                                    <select name="" id="" @change="change" v-model="selectedState">
                                         <option value="">Select a state ...</option>
                                         <option v-for="state in states" :value="state.state" :key="state.id">
                                             {{state.state}}
@@ -43,11 +43,17 @@
     export default{
         data(){
             return{
-                
+                selectedState:''
             }
         },
         computed:{
             ...mapGetters(['states'])
+        },
+        methods:{
+            change:()=>{
+                console.log('hahahhaha')
+                //this.$store.dispatch
+            }
         },
         mounted () {
             console.log('mounted')
