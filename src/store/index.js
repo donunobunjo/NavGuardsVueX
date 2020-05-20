@@ -15,7 +15,7 @@ export default new Vuex.Store({
     token: localStorage.getItem('token') || '',
     user : '',
     states:[],
-    lga:[]
+    lgas:[]
   },
   getters : {
     isLoggedIn: state => !!state.token,
@@ -23,6 +23,9 @@ export default new Vuex.Store({
     userName: state=>state.user,
     states: state=>{
       return state.states
+    },
+    lgas:state=>{
+      return state.lgas
     }
   },
   mutations: {
@@ -48,6 +51,9 @@ export default new Vuex.Store({
     },
     fetch_states(state,states){
        state.states=states
+    },
+    fetch_lgas(state,lgas){
+      state.lgas=lgas
     }
   },
   actions:{
@@ -117,8 +123,21 @@ export default new Vuex.Store({
               reject(err)
             })
         })
-          
-    }
+    },
+    fetchLgas({commit},state){
+      return new Promise((resolve,reject)=>{
+        let uri ='http://127.0.0.1:8000/api/lgsinstate/'+state
+        Axios.get(uri)
+          .then(res=>{
+              commit('fetch_lgas',res.data)
+              resolve(res)
+          })
+          .catch(err=>{
+            reject(err)
+            //console.log(err)
+          })
+      })
+  }
   },
   strict: debug
 });

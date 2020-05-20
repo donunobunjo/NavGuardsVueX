@@ -8,12 +8,19 @@
                             <h3>States and LGA's</h3>
                         </div>
                         <div class="card-body">
+                                    <!--<select v-model="selected" @change='change'>
+                                        <option disabled value="">Select State</option>
+                                        <option v-for="state in states" :value="state.state" :key="state.state">
+                                            {{state.state}}
+                                        </option>
+                                    </select>
+                                    <p><b>Selected</b>: {{ selected }} </p>-->
                             <form>
                                 <div class="row form-group">
-                                    <label for="state">State:</label>
-                                    <select name="" id="" @change="change" v-model="selectedState">
-                                        <option value="">Select a state ...</option>
-                                        <option v-for="state in states" :value="state.state" :key="state.id">
+                                    <label for="state">State</label>
+                                    <select id="state" class="form-control" @change="change">
+                                        <option disabled value="">Select a state ...</option>
+                                        <option v-for="state in states" :value="state.state" :key="state.state">
                                             {{state.state}}
                                         </option>
                                     </select>
@@ -39,24 +46,29 @@
 </template>
 
 <script>
-    import {mapGetters} from 'vuex'
+   import {mapGetters} from 'vuex'
     export default{
         data(){
             return{
-                selectedState:''
+                selected:'',
+               // states:[{state:'abia'},{state:'lagos'},{state:'zamfara'},{state:'bornu'}]
+
             }
         },
         computed:{
-            ...mapGetters(['states'])
+            ...mapGetters(['states','lgas'])
         },
         methods:{
-            change:()=>{
-                console.log('hahahhaha')
-                //this.$store.dispatch
+            change:(event)=>{
+               let state = event.target.value
+               //console.log(state)
+                //this.$store.dispatch('fetchLgas',state)
+                this.$store.dispatch('fetchLgas',state)
+                console.log(this.lgas)
             }
         },
         mounted () {
-            console.log('mounted')
+           // console.log('mounted')
             this.$store.dispatch('fetchStates')
         }
     }
