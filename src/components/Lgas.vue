@@ -19,7 +19,7 @@
                                 <div class="row form-group">
                                     <label for="state">State</label>
                                     <select id="state" class="form-control" @change="change">
-                                        <option disabled value="">Select a state ...</option>
+                                        <option selected disabled value="">Select a state ...</option>
                                         <option v-for="state in states" :value="state.state" :key="state.state">
                                             {{state.state}}
                                         </option>
@@ -29,12 +29,14 @@
                             <hr>
                             <table class="table table-responsive">
                                 <thead>
-                                    <tr></tr>
-                                    <tr></tr>
+                                    <th>LGA</th>
+                                    <th>STATE</th>
                                 </thead>
                                 <tbody>
-                                    <tr></tr>
-                                    <tr></tr>
+                                    <tr v-for="lga in lgas" :key="lga.lga">
+                                        <td>{{lga.lga}}</td>
+                                        <td>{{lga.state}}</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -52,19 +54,23 @@
             return{
                 selected:'',
                // states:[{state:'abia'},{state:'lagos'},{state:'zamfara'},{state:'bornu'}]
-
+               // lgas:[]
             }
         },
         computed:{
             ...mapGetters(['states','lgas'])
         },
         methods:{
-            change:(event)=>{
+            change(event){
                let state = event.target.value
-               //console.log(state)
-                //this.$store.dispatch('fetchLgas',state)
                 this.$store.dispatch('fetchLgas',state)
-                console.log(this.lgas)
+                .then(()=>{
+                    //console.log(this.lgas)
+                })
+                .catch((err)=>{
+                    console.log(err)
+                })
+               
             }
         },
         mounted () {
