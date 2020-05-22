@@ -34,6 +34,18 @@
                                     </tr>
                                 </tbody>
                             </table>
+                            <el-dialog v-if="currentLga" :visible.sync='lgaViewDialog'>
+                                <form>
+                                    <div class="row form-group">
+                                        <label for="state">State</label>
+                                        <input type="text" id="state" class="form-control" v-model="currentLga.state" disabled>
+                                    </div>
+                                    <div class="row form-group">
+                                        <label for="lga">Lga</label>
+                                        <input type="text" id="lga" class="form-control" v-model="currentLga.lga" disabled>
+                                    </div>
+                                </form>
+                            </el-dialog>
                         </div>
                     </div>
                 </div>
@@ -48,7 +60,8 @@
         data(){
             return{
                 selected:'',
-                currentLga:''
+                currentLga:'',
+                lgaViewDialog: false
             }
         },
         computed:{
@@ -67,8 +80,9 @@
                
             },
             view(i){
-                console.log(i)
-               
+                this.currentLga=i
+                //console.log(this.currentLga)
+                this.lgaViewDialog= true
             }
         },
         mounted () {
