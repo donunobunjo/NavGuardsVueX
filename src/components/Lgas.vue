@@ -2,19 +2,12 @@
     <div>
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-md-8">
+                <div class="col-md-6">
                     <div class="card card-default">
                         <div class="card-header">
                             <h3>States and LGA's</h3>
                         </div>
                         <div class="card-body">
-                                    <!--<select v-model="selected" @change='change'>
-                                        <option disabled value="">Select State</option>
-                                        <option v-for="state in states" :value="state.state" :key="state.state">
-                                            {{state.state}}
-                                        </option>
-                                    </select>
-                                    <p><b>Selected</b>: {{ selected }} </p>-->
                             <form>
                                 <div class="row form-group">
                                     <label for="state">State</label>
@@ -31,11 +24,13 @@
                                 <thead>
                                     <th>LGA</th>
                                     <th>STATE</th>
+                                    <th>Action</th>
                                 </thead>
                                 <tbody>
                                     <tr v-for="lga in lgas" :key="lga.lga">
                                         <td>{{lga.lga}}</td>
                                         <td>{{lga.state}}</td>
+                                        <td><button class="btn btn-primary" @click="view(lga)">View</button></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -53,8 +48,7 @@
         data(){
             return{
                 selected:'',
-               // states:[{state:'abia'},{state:'lagos'},{state:'zamfara'},{state:'bornu'}]
-               // lgas:[]
+                currentLga:''
             }
         },
         computed:{
@@ -70,6 +64,10 @@
                 .catch((err)=>{
                     console.log(err)
                 })
+               
+            },
+            view(i){
+                console.log(i)
                
             }
         },
