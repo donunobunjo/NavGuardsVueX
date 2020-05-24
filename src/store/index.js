@@ -12,15 +12,20 @@ const debug = process.env.NODE_ENV !== 'production';
 export default new Vuex.Store({
   state: {
     status: '',
-    token: localStorage.getItem('token') || '',
-    user : '',
+    token: localStorage.getItem('token') ||null,
+    username : localStorage.getItem('username')||null,
+    //username : 'Dona',
     states:[],
     lgas:[]
   },
   getters : {
-    isLoggedIn: state => !!state.token,
+    /*isLoggedIn: state => {
+      return state.token
+    },*/
     authStatus: state => state.status,
-    userName: state=>state.user,
+    username: state=>{
+      return state.username
+    },
     states: state=>{
       return state.states
     },
@@ -36,18 +41,16 @@ export default new Vuex.Store({
     //auth_success(state, user){
       state.status = 'success'
       state.token = token
-      state.user = user
-      console.log('lalalalal')
-      console.log(state.user)
-      console.log(state.token)
+      state.username = user
+     
     },
     auth_error(state){
       state.status = 'error'
     },
     logout(state){
       state.status = ''
-      state.token = ''
-      state.user= ''
+      state.token = null
+      state.username= null
     },
     fetch_states(state,states){
        state.states=states
@@ -65,12 +68,15 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         let uri = 'http://127.0.0.1:8000/api/register' 	
         commit('auth_request')
+        console.log("Profile be : "+profile.name)
         Axios.post(uri, profile)
         .then(resp => {
           const token = resp.data.token
-          const user = resp.data.user
+          const user = resp.data.name
           localStorage.setItem('token', token)
+          localStorage.setItem('username',user)
           Axios.defaults.headers.common['Authorization'] = 'Bearer '+ token
+          console.log("user be : "+user)
           commit('auth_success', user, token)
           resolve(resp)
         })
@@ -90,6 +96,7 @@ export default new Vuex.Store({
           const token = resp.data.token
           const user = resp.data.user
           localStorage.setItem('token', token)
+          localStorage.setItem('username',user)
           Axios.defaults.headers.common['Authorization'] = 'Bearer '+ token
           commit('auth_success', user, token)
           resolve(resp)
@@ -105,6 +112,7 @@ export default new Vuex.Store({
         return new Promise((resolve, reject) => {
         commit('logout')
         localStorage.removeItem('token')
+        localStorage.removeItem('username')
         delete Axios.defaults.headers.common['Authorization']
         resolve()
         reject()

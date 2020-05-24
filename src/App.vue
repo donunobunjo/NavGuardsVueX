@@ -1,6 +1,7 @@
 <template>
-  <div id="app">
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div id="app" class="container">
+      <top-bar></top-bar>
+      <!--<nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="collapse navbar-collapse">
                 <div class="navbar-nav">
                     <router-link to="/" class="nav-item nav-link">Home</router-link>
@@ -9,17 +10,24 @@
                     <span v-if="isLoggedIn">Welcome, {{user}}</span>
                     <button v-if="isLoggedIn" @click.prevent="logout" class="btn btn-secondary lefty">log out</button>
                 </div>
-            </div>
-        </nav>
+            </div>S
+        </nav>-->
         <br/>
+        <NavBar></NavBar>
         <router-view></router-view>
   </div>
 </template>
 
 <script>
+import NavBar from './components/NavBar.vue'
+import TopBar from './components/TopBar.vue'
 import {mapState} from 'vuex'
 export default {
   name: 'App',
+  components:{
+    NavBar,
+    TopBar
+  },
   data(){
     return{
       //loggedIn:null,
