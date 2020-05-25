@@ -19,9 +19,7 @@ export default new Vuex.Store({
     lgas:[]
   },
   getters : {
-    /*isLoggedIn: state => {
-      return state.token
-    },*/
+    
     authStatus: state => state.status,
     username: state=>{
       return state.username

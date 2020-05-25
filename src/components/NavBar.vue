@@ -16,7 +16,7 @@
 
             <b-nav-item-dropdown text="DashBoard">
                 <b-dropdown-item to="/dashboard/lga">LGAS</b-dropdown-item>
-                <b-dropdown-item to="#">ES</b-dropdown-item>
+                <b-dropdown-item to="/dashboard/test">TEST</b-dropdown-item>
                 
             </b-nav-item-dropdown>
 

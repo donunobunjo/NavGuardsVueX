@@ -7,6 +7,9 @@
                     Register
                 </div>
                 <div class="card-body">
+                    <div v-if="spinner">
+                             <b-spinner type="grow" label="Busy"></b-spinner>
+                    </div>
                     <!--<div class="col-md-8">-->
                         <form>
                             <div class="row form-group">
@@ -43,14 +46,22 @@
                     name: '',
                     email: '',
                     password: ''
-                }
+                },
+                spinner:false
             }
         },
         methods: {
             register() {
+                    this.spinner=true
                     this.$store.dispatch('register', this.profile)
-                    .then(() => this.$router.push({name:'dashboard'}))
-                    .catch(err => console.log(err))
+                    .then(() => {
+                        this.spinner=false
+                        this.$router.push({name:'dashboard'})
+                    })
+                    .catch(err => {
+                        console.log(err)
+                        this.spinner=false
+                    })
 
             },
         },
