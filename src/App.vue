@@ -13,19 +13,18 @@
             </div>S
         </nav>-->
         <br/>
-        <NavBar></NavBar>
+        <!--<NavBar></NavBar>-->
         <router-view></router-view>
   </div>
 </template>
 
 <script>
-import NavBar from './components/NavBar.vue'
+//import NavBar from './components/NavBar.vue'
 import TopBar from './components/TopBar.vue'
 import {mapState} from 'vuex'
 export default {
   name: 'App',
   components:{
-    NavBar,
     TopBar
   },
   data(){

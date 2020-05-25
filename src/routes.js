@@ -1,7 +1,8 @@
-import Home from './components/Lgas.vue'
+import Home from './components/Home.vue'
 import Login from './components/Login.vue'
 import Register from './components/Register.vue'
 import DashBoard from './components/DashBoard.vue'
+import Lga from './components/Lgas.vue'
 
 export default [
         {
@@ -23,6 +24,10 @@ export default [
             path:'/dashboard',
             name:'dashboard',
             component:DashBoard,
+            children: [
+                { path: 'lga', component: Lga },
+                //{ path: '/travel/china', component: TravelChinaPage}
+            ],
             beforeEnter:function(to,from,next){
                 if (localStorage.getItem('token')==null){
                     //next(false)
@@ -32,5 +37,10 @@ export default [
                   next()
                 }
             }
-        }
+        },
+        /*{
+            path:'/lga',
+            name:'lga',
+            component:Lga
+        },*/
     ]

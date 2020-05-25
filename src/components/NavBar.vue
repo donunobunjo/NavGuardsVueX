@@ -7,18 +7,17 @@
 
             <b-collapse id="nav-collapse" is-nav>
             <b-navbar-nav>
-                <b-nav-item href="#">Lgas</b-nav-item>
+                <b-nav-item to="/lga">Lgas</b-nav-item>
                 <!--<b-nav-item href="#" disabled>Disabled</b-nav-item>-->
             </b-navbar-nav>
 
 
 
 
-            <b-nav-item-dropdown text="Buyit">
-                <b-dropdown-item href="#">EN</b-dropdown-item>
-                <b-dropdown-item href="#">ES</b-dropdown-item>
-                <b-dropdown-item href="#">RU</b-dropdown-item>
-                <b-dropdown-item href="#">FA</b-dropdown-item>
+            <b-nav-item-dropdown text="DashBoard">
+                <b-dropdown-item to="/dashboard/lga">LGAS</b-dropdown-item>
+                <b-dropdown-item to="#">ES</b-dropdown-item>
+                
             </b-nav-item-dropdown>
 
 

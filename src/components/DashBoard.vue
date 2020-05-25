@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="container">
+        <!--<div class="container">
             <div class="row">
                 <div class="col-md-6">
                     <create-post/>
@@ -9,18 +9,19 @@
                     <all-posts/>
                 </div>
             </div>
-        </div>
+        </div>-->
+        <nav-bar></nav-bar>
+        <router-view></router-view>
     </div>
 </template>
 
 <script>
-import CreatePost from './CreatePost.vue'
-import AllPosts from './AllPosts.vue'
+import NavBar from './NavBar.vue'
+//import AllPosts from './AllPosts.vue'
 export default {
     name:'DashBoard',
     components:{
-        CreatePost,
-        AllPosts
+        NavBar,
     },
     beforeMount() {
       let token = localStorage.getItem('token')

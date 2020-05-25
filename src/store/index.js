@@ -68,7 +68,6 @@ export default new Vuex.Store({
       return new Promise((resolve, reject) => {
         let uri = 'http://127.0.0.1:8000/api/register' 	
         commit('auth_request')
-        console.log("Profile be : "+profile.name)
         Axios.post(uri, profile)
         .then(resp => {
           const token = resp.data.token
@@ -76,7 +75,6 @@ export default new Vuex.Store({
           localStorage.setItem('token', token)
           localStorage.setItem('username',user)
           Axios.defaults.headers.common['Authorization'] = 'Bearer '+ token
-          console.log("user be : "+user)
           commit('auth_success', user, token)
           resolve(resp)
         })
@@ -121,7 +119,7 @@ export default new Vuex.Store({
     },
     fetchStates({commit}){
         return new Promise((resolve,reject)=>{
-          let uri= 'http://127.0.0.1:8000/api/states'
+          let uri= 'http://lga-api.herokuapp.com/api/states'
           Axios.get(uri)
             .then((res)=>{
               commit('fetch_states',res.data)
@@ -134,7 +132,7 @@ export default new Vuex.Store({
     },
     fetchLgas({commit},state){
       return new Promise((resolve,reject)=>{
-        let uri ='http://127.0.0.1:8000/api/lgsinstate/'+state
+        let uri ='http://lga-api.herokuapp.com/api/lgsinstate/'+state
         Axios.get(uri)
           .then(res=>{
               commit('fetch_lgas',res.data)
