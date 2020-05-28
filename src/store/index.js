@@ -16,7 +16,8 @@ export default new Vuex.Store({
     username : localStorage.getItem('username')||null,
     //username : 'Dona',
     states:[],
-    lgas:[]
+    lgas:[],
+    posts:[]
   },
   getters : {
     
@@ -55,6 +56,9 @@ export default new Vuex.Store({
     },
     fetch_lgas(state,lgas){
       state.lgas=lgas
+    },
+    setPosts(state,posts){
+        state.posts=posts
     }
   },
   actions:{
@@ -141,7 +145,17 @@ export default new Vuex.Store({
             //console.log(err)
           })
       })
-  }
+    },
+    getAllPosts({commit}){
+      return new Promise(()=>{
+        let uri='http://127.0.0.1:8000/api/get_all'
+        Axios.get(uri)
+        .then(res=>{
+          commit('setPosts',res.data.data)
+        })
+        .catch()
+      })
+    }
   },
   strict: debug
 });
