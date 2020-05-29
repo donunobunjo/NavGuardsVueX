@@ -3,6 +3,8 @@ import Login from './components/Login.vue'
 import Register from './components/Register.vue'
 import DashBoard from './components/DashBoard.vue'
 import Lga from './components/Lgas.vue'
+import Product from './components/Products.vue'
+import AllProducts from './components/AllProducts.vue'
 import Test from './components/Test.vue'
 
 export default [
@@ -27,7 +29,9 @@ export default [
             component:DashBoard,
             children: [
                 { path: 'lga', component: Lga },
-                { path: 'test', component: Test}
+                { path: 'test', component: Test},
+                { path: 'product', component: Product},
+                {path: 'allproducts', component:AllProducts}
             ],
             beforeEnter:function(to,from,next){
                 if (localStorage.getItem('token')==null){

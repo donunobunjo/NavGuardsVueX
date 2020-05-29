@@ -17,7 +17,11 @@
             <b-nav-item-dropdown text="DashBoard">
                 <b-dropdown-item to="/dashboard/lga">LGAS</b-dropdown-item>
                 <b-dropdown-item to="/dashboard/test">TEST</b-dropdown-item>
-                
+            </b-nav-item-dropdown>
+
+             <b-nav-item-dropdown text="Products">
+                <b-dropdown-item to="/dashboard/product">Products</b-dropdown-item>
+                <b-dropdown-item to="/dashboard/allproducts">All Products</b-dropdown-item>
             </b-nav-item-dropdown>
 
 

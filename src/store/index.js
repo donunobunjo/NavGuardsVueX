@@ -17,7 +17,9 @@ export default new Vuex.Store({
     //username : 'Dona',
     states:[],
     lgas:[],
-    posts:[]
+    posts:[],
+    // products:[],
+    allProducts:[]
   },
   getters : {
     
@@ -30,7 +32,13 @@ export default new Vuex.Store({
     },
     lgas:state=>{
       return state.lgas
-    }
+    },
+    allProducts:state=>{
+        return state.allProducts
+    },
+    /*products:state=>{
+      return state.products
+    }*/
   },
   mutations: {
     auth_request(state){
@@ -59,7 +67,13 @@ export default new Vuex.Store({
     },
     setPosts(state,posts){
         state.posts=posts
-    }
+    },
+    setproducts(state,products){
+      state.allProducts = products
+    },
+    /*ADD_PRODUCT(state,product){
+      state.products.push(product)
+    }*/
   },
   actions:{
     /*async getAllPosts({ commit }) {
@@ -147,15 +161,44 @@ export default new Vuex.Store({
       })
     },
     getAllPosts({commit}){
-      return new Promise(()=>{
+      return new Promise((resolve,reject)=>{
         let uri='http://127.0.0.1:8000/api/get_all'
         Axios.get(uri)
         .then(res=>{
           commit('setPosts',res.data.data)
+          resolve(res)
         })
-        .catch()
+        .catch(err=>{
+          reject(err)
+        })
       })
-    }
+    },
+    fetchAllProducts({commit}){
+      return new Promise((resolve,reject)=>{
+        let uri='http://127.0.0.1:8000/api/product'
+        Axios.get(uri)
+        .then((res)=>{
+          commit('setproducts',res.data.products)
+          resolve(res)
+        })
+        .catch(err=>{
+          reject(err)
+        })
+      })
+    },
+    /*addProduct({commit},payload){
+      return new Promise((resolve,reject)=>{
+        let uri = 'http://127.0.0.1:8000/api/product'
+        Axios.post(uri,payload)
+        .then(res=>{
+          commit('ADD_PRODUCT',res.data.product)
+          resolve(res)
+        })
+        .catch(err=>{
+          reject(err)
+        })
+      })
+    }*/
   },
   strict: debug
 });
