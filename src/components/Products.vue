@@ -5,11 +5,13 @@
                 <form>
                     <div class="row form-group">
                         <label for="item">Item</label>
-                        <input type="text" class="form-control" id="item" v-model='productDetails.item'>
+                        <input type="text" class="form-control" id="item" v-model='productDetails.item' ref="item">
+                        <span v-if="error.errItem" class='err'>{{error.errItem}}</span>
                     </div>
                      <div class="row form-group">
                         <label for="quantity">Quantity</label>
-                        <input type="number" class="form-control" id="quantity" v-model="productDetails.quantity">
+                        <input type="number" class="form-control" id="quantity" v-model="productDetails.quantity" ref="quantity">
+                        <span v-if="error.errQuantity" class='err'>{{error.errQuantity}}</span>
                     </div>
                     <div class="row form-group">
                         <label for="price">Price</label>
@@ -58,10 +60,16 @@ export default {
                 quantity:0,
                 price:0
             },
-            products:[]
+            products:[],
             // item:'',
             // quantity:0,
             // price:0
+            error:{
+                errMessage:'',
+                errItem:'',
+                errQuantity:'',
+                errPrice:''
+            }
         }
     },
     methods:{
@@ -71,6 +79,24 @@ export default {
             // .then(()=>{
                 
             // })
+            if (this.productDetails.item==''){
+                this.error.errItem='Item is required'
+                setTimeout(()=>{
+                    this.error.errItem=''
+                },3000)
+                
+                this.$refs.item.focus()
+                return false
+            }
+            if (this.productDetails.quantity==''){
+                this.error.errQuantity='A number is needed here'
+                setTimeout(()=>{
+                    this.error.errQuantity=''
+                },3000)
+                
+                this.$refs.quantity.focus()
+                return false
+            }
             let uri='http://127.0.0.1:8000/api/product'
             this.axios.post(uri,this.productDetails)
             .then((res)=>{
@@ -90,3 +116,9 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+    .err{
+        font-weight: bolder;
+    }
+</style>
