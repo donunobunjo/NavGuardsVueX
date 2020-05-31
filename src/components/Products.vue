@@ -49,6 +49,7 @@
 
 <script>
 // import {mapGetters} from 'vuex';
+import swal from 'sweetalert'
 export default {
     data(){
         return{
@@ -77,6 +78,7 @@ export default {
                 this.productDetails.item=''
                 this.productDetails.quantity=''
                 this.productDetails.price=''
+                swal("Prouct","Product saved successfully","success")
             })
             .catch((err)=>{
                 console.log(err)

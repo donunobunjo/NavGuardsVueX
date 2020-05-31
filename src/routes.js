@@ -6,6 +6,7 @@ import Lga from './components/Lgas.vue'
 import Product from './components/Products.vue'
 import AllProducts from './components/AllProducts.vue'
 import Test from './components/Test.vue'
+import Demo from './components/Demo.vue'
 
 export default [
         {
@@ -31,7 +32,8 @@ export default [
                 { path: 'lga', component: Lga },
                 { path: 'test', component: Test},
                 { path: 'product', component: Product},
-                {path: 'allproducts', component:AllProducts}
+                {path: 'allproducts', component:AllProducts},
+                {path: 'demo', component:Demo}
             ],
             beforeEnter:function(to,from,next){
                 if (localStorage.getItem('token')==null){
