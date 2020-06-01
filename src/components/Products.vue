@@ -38,11 +38,32 @@
                             <td>{{product.price}}</td>
                             <td>
                                 <button class="btn btn-primary">View</button>
-                                <button class="btn btn-secondary">Edit</button>
+                                <button class="btn btn-secondary" @click.prevent='edit(product)'>Edit</button>
+                                <button class="btn btn-danger" @click.prevent='destroy(product)'>Delete</button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
+                <el-dialog v-if='currentProduct' :visible.sync=' editDialogueVisible'>
+                    <form>
+                        <div class="form-group row">
+                            <label for="item">Item</label>
+                            <input type="text" class="form-control" id="item" v-model="currentProduct.item">
+                        </div>
+                        <div class="form-group row">
+                            <label for="quantity">Quantity</label>
+                            <input type="number" class="form-control" id="quantity" v-model="currentProduct.quantity">
+                        </div>
+                        <div class="form-group row">
+                            <label for="price">Price</label>
+                            <input type="number" class="form-control" id="price" v-model="currentProduct.price">
+                        </div>
+                        <div class="form-group row">
+                            <button>Save</button>
+                            <button>Cancel</button>                        
+                        </div>
+                    </form>
+                </el-dialog>
             </div>
         </div>
     </div>
@@ -69,7 +90,9 @@ export default {
                 errItem:'',
                 errQuantity:'',
                 errPrice:''
-            }
+            },
+            editDialogueVisible:false,
+            currentProduct:null
         }
     },
     methods:{
@@ -108,6 +131,20 @@ export default {
             })
             .catch((err)=>{
                 console.log(err)
+            })
+        },
+        edit(i){
+            this.currentProduct=i
+            this.editDialogueVisible=true
+            console.log('ahahahahaha')
+        },
+        destroy(i){
+            console.log(i)
+            let uri='http://127.0.0.1:8000/api/product/${i}'
+            this.axios.delete(uri)
+            .then((res)=>{
+                console.log(i)
+                console.log(res)
             })
         }
     },
