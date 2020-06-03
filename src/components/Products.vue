@@ -44,7 +44,7 @@
                         </tr>
                     </tbody>
                 </table>
-                <el-dialog v-if='currentProduct' :visible.sync=' editDialogueVisible'>
+                <el-dialog v-if='editID' :visible.sync=' editDialogueVisible'>
                     <form>
                         <div class="form-group row">
                             <label for="item">Item</label>
@@ -59,7 +59,7 @@
                             <input type="number" class="form-control" id="price" v-model="currentProduct.price">
                         </div>
                         <div class="form-group row">
-                            <button>Save</button>
+                            <button @click.prevent="update(currentProduct)">Save</button>
                             <button>Cancel</button>                        
                         </div>
                     </form>
@@ -92,7 +92,9 @@ export default {
                 errPrice:''
             },
             editDialogueVisible:false,
-            currentProduct:null
+            currentProduct:{},
+            editID:'',
+            initialProduct:{}
         }
     },
     methods:{
@@ -134,18 +136,60 @@ export default {
             })
         },
         edit(i){
-            this.currentProduct=i
+            //console.log(i.id)
+            this.initialProduct=i
+            this.editID=i.id
+            this.currentProduct.id = i.id
+            this.currentProduct.item = i.item
+            this.currentProduct.quantity = i.quantity
+            this.currentProduct.price = i.price
+           // console.log(this.editID)
+
             this.editDialogueVisible=true
-            console.log('ahahahahaha')
         },
         destroy(i){
-            console.log(i)
-            let uri='http://127.0.0.1:8000/api/product/${i}'
-            this.axios.delete(uri)
-            .then((res)=>{
-                console.log(i)
-                console.log(res)
-            })
+
+
+            swal({
+                title: "Are you sure?",
+                text: "Once deleted, you will not be able to recover this product!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+                })
+                .then((willDelete) => {
+                if (willDelete) {
+                    let uri='http://127.0.0.1:8000/api/product/'+i.id
+                    this.axios.delete(uri)
+                    .then((res)=>{
+                       if (res.data.message=='Product deleted successfully'){
+                         this.products.splice(this.products.indexOf(i), 1);
+                       }
+                    })
+                    swal("Product deleted successfully!", {
+                    icon: "success",
+                    });
+                } else {
+                    //swal("Your imaginary file is safe!");
+                }
+            });
+        },
+        update(i){
+            //console.log(i.id)
+             const uri = 'http://127.0.0.1:8000/api/product/'+i.id
+             this.axios.put(uri,this.currentProduct)
+             .then((res)=>{
+                 if(res.data.message=='Product updated succesfully')
+                 {
+                     //console.log(res.data.message)
+                     this.products.splice(this.products.indexOf(this.initialProduct), 1,this.currentProduct);
+                     this.editID=''
+                     this.editDialogueVisible=false
+                 }
+             })
+             .catch((err)=>{
+                 console.log(err)
+             })
         }
     },
     computed:{
