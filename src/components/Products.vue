@@ -44,6 +44,7 @@
                                 <button class="btn btn-danger" @click.prevent='destroy(product)'>Delete</button>
                             </td>
                         </tr>
+                        <tr>{{totalAmount}}</tr>
                     </tbody>
                 </table>
                 <el-dialog v-if='editID' :visible.sync=' editDialogueVisible'>
@@ -133,6 +134,8 @@ export default {
                 this.productDetails.price=''
                 swal("Prouct","Product saved successfully","success")
                 console.log(this.calculateAmount)
+                console.log('+++++++++++++++++++++++')
+                console.log(this.totalAmount)
             })
             .catch((err)=>{
                 console.log(err)
@@ -208,9 +211,11 @@ export default {
                 }
             })
         },
-        // totalAmount(){
-        //     calculateAmount.reduce()
-        // }
+        totalAmount(){
+            return this.calculateAmount.reduce((total,price)=>{
+                return total+price.amount
+            },0)
+        }
     }
 }
 </script>
