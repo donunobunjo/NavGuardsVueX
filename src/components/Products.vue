@@ -28,14 +28,16 @@
                             <th>Item</th>
                             <th>Quantity</th>
                             <th>Price</th>
+                            <th>Amount</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="product in products" :key="product.id">
+                        <tr v-for="product in calculateAmount" :key="product.id">
                             <td>{{product.item}}</td>
                             <td>{{product.quantity}}</td>
                             <td>{{product.price}}</td>
+                            <td>{{product.amount}}</td>
                             <td>
                                 <button class="btn btn-primary">View</button>
                                 <button class="btn btn-secondary" @click.prevent='edit(product)'>Edit</button>
@@ -130,6 +132,7 @@ export default {
                 this.productDetails.quantity=''
                 this.productDetails.price=''
                 swal("Prouct","Product saved successfully","success")
+                console.log(this.calculateAmount)
             })
             .catch((err)=>{
                 console.log(err)
@@ -194,6 +197,20 @@ export default {
     },
     computed:{
         // ...mapGetters(['products'])
+        calculateAmount(){
+            return this.products.map((product)=>{
+                return {
+                    id:product.id,
+                    item:product.item,
+                    quantity:product.quantity,
+                    price:product.price,
+                    amount:product.quantity*product.price
+                }
+            })
+        },
+        // totalAmount(){
+        //     calculateAmount.reduce()
+        // }
     }
 }
 </script>
