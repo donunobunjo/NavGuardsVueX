@@ -14,11 +14,9 @@ export default new Vuex.Store({
     status: '',
     token: localStorage.getItem('token') ||null,
     username : localStorage.getItem('username')||null,
-    //username : 'Dona',
     states:[],
     lgas:[],
     posts:[],
-    // products:[],
     allProducts:[]
   },
   getters : {
